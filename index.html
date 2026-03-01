@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GisVin Excursiones</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #0f4c75, #1b9aaa);
+      color: #ffffff;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1b9aaa, #06d6a0);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+   .logo-circular {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px auto;
+  border: 5px solid #ffffff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.logo-circular img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8em;
+    }
+
+    header p {
+      font-size: 1.1em;
+      opacity: 0.95;
+    }
+
+    .container {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      color: #003049;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h3 {
+      margin: 0 0 10px;
+    }
+
+    .price {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #1b9aaa;
+      margin: 10px 0;
+    }
+
+    .btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 18px;
+  background: #06d6a0;
+  color: #003049;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+
+  /* 🔥 Correcciones para que el button se vea igual que el <a> */
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+}
+
+    .btn:hover {
+      background: #1b9aaa;
+      color: #ffffff;
+    }
+
+    .floating-call, .floating-whatsapp {
+      position: fixed;
+      right: 20px;
+      padding: 15px 18px;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 1.2em;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .floating-call {
+      bottom: 90px;
+      background: #1b9aaa;
+    }
+
+    .floating-whatsapp {
+      bottom: 25px;
+      background: #25D366;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.25);
+      margin-top: 50px;
+      font-size: 0.9em;
+    }
+    /* MODAL DINÁMICO */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:2000;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+
+.modal-content{
+  background:white;
+  margin:10% auto;
+  padding:25px;
+  width:320px;
+  border-radius:15px;
+  text-align:center;
+  animation: zoom 0.3s ease;
+  color:#003049;
+}
+
+.modal-content h2{
+  margin-top:0;
+}
+
+.close{
+  float:right;
+  font-size:22px;
+  cursor:pointer;
+  color:red;
+}
+
+@keyframes zoom{
+  from{transform:scale(0.7);}
+  to{transform:scale(1);}
+}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-circular">
+  <img src="c:\Users\Hp\Downloads\LOGO_[C@96b0e54.png" alt="GisVin Excursiones">
+</div>
+  <h1>GisVin Excursiones</h1>
+  <p>Viajes, aventuras y recuerdos inolvidables 🌊✈️</p>
+</header>
+
+<div class="container">
+  <section style="text-align:center;margin-bottom:40px;">
+    <h2>¿Por qué viajar con GisVin?</h2>
+    <p>Transporte cómodo, coordinación profesional y experiencias inolvidables. Tú disfruta, nosotros nos encargamos.</p>
+  </section>
+
+  <h2>Calendario de Viajes</h2>
+
+  <div class="grid">
+
+    <!-- ENERO (CON PRECIO) -->
+   
+
+    <div class="card">
+      <img src="imagenes/img1.jpg" alt="ixtapa" width="300">
+      <div class="card-content">
+        <h3>Ixtapa</h3>
+        <p>19 de abril</p>
+        <div class="price">$800</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/img2.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Cuatro cienegas</h3>
+        <p>21 y 22 de marzo</p>
+        <div class="price">Desde $2650</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+
+    <!-- FEBRERO -->
+    <div class="card">
+      <img src="imagenes/img3.jpg" alt="Las estacas" width="300">
+      <div class="card-content">
+        <h3>Las estacas (porque natural en morelos)</h3>
+        <p>Del 7 al 8 de marzo</p>
+        <div class="price">Desde $2900</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+
+    <!-- VIAJES SIN PRECIO -->
+    <div class="card">
+      <img src="imagenes/img4.jpg" alt="Ixtapa" width="300">
+      <div class="card-content">
+        <h3>Ixtapa</h3>
+        <p>28 y 29 de marzo</p>
+        <div class="price">Desde $1700</div>
+       <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+
+    <div class="card varios-dias"
+     data-doble="$13,500"
+     data-triple="$12,000"
+     data-cuadruple="$11,000">
+      <img src="imagenes/img5.jpg" alt="Mazatlán" width="300">
+      <div class="card-content">
+        <h3>Mazatlán y Los Cabos</h3>
+        <p>4 al 11 de abril</p>
+        <div class="price">Desde $13,500</div>
+       <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+
+    </div> <div class="card">
+      <img src="imagenes/img6.jpg" alt="Soriano y tequisquiapan" width="300">
+      <div class="card-content">
+        <h3>Soriano y tequisquiapan </h3>
+        <p>26 de marzo</p>
+        <div class="price">$450</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="imagenes/img7.jpg" alt="RIU Mazatlán" width="300">
+      <div class="card-content">
+        <h3>RIU Mazatlán</h3>
+        <p>Del 16 al 19 de abril</p>
+        <div class="price">Desde $9999</div>
+       <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img8.jpg" alt="Bioparque Estrella" width="300">
+      <div class="card-content">
+        <h3>Bioparque Estrella</h3>
+        <p>25 de abril</p>
+        <div class="price">$1099</div>
+        <a class="btn" href="https://wa.me/524428671851">Cunsulta precios y disponibilidad</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img9.jpg" alt="Zoologico" width="300">
+      <div class="card-content">
+        <h3>Zoologico de Guadalajara</h3>
+        <p>26 de abril</p>
+        <div class="price">$000</div>
+        <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img10.jpg" alt="tolantongo" width="300">
+      <div class="card-content">
+        <h3>Tolantongo</h3>
+        <p>26 de abril</p>
+        <div class="price">$000</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img11.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>La Caldera</h3>
+        <p>30 de abril</p>
+        <div class="price">$000</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img12.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Huasteca Potosina (Tamasopo)</h3>
+        <p>2 y 3 de mayo</p>
+        <div class="price">$1700</div>
+       <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img13.webp" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Krysral Puerto Vallarta</h3>
+        <p>del 8 al 12 de mayo</p>
+        <div class="price">$9199</div>
+       <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img14.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Geiser</h3>
+        <p>9 de mayo</p>
+        <div class="price">$000</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img15.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Tolantongo</h3>
+        <p>16 y 17 de mayo</p>
+        <div class="price">$1300</div>
+        <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+   <div class="card">
+  <img src="imagenes/img16.jpg" alt="Cuatro cienegas" width="300">
+  <div class="card-content">
+    <h3>Ixtapa</h3>
+    <p>23 y 24 de mayo</p>
+    <div class="price">$1600</div>
+   <button class="btn abrir-modal">Aparta tu lugar</button>
+      Aparta tu lugar
+    </a>
+  </div>
+</div>
+    <div class="card">
+      <img src="imagenes/img17.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>RIU Jalisco</h3>
+        <p>Del 28 al 31 de mayo</p>
+        <div class="price">$000</div>
+        <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img18.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Lago de Camecuaro</h3>
+        <p>7 de junio</p>
+        <div class="price">$000</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img19.webp" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Barra de Navidad </h3>
+        <p>Del 12 al 14 de Junio</p>
+        <div class="price">$000</div>
+       <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div><div class="card">
+      <img src="imagenes/img20.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>La Caldera</h3>
+        <p>21 de Junio</p>
+        <div class="price">$000</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img21.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>ixtapazo (un dia)</h3>
+        <p>27 de Junio</p>
+        <div class="price">$800</div>
+        <a class="btn" href="https://wa.me/524428671851">Aparta tu lugar</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="imagenes/img22.jpg" alt="Cuatro cienegas" width="300">
+      <div class="card-content">
+        <h3>Tecozautla Hidalgo. Balneario el Arenal </h3>
+        <p>28 de junio</p>
+        <div class="price">$000</div>
+       <button class="btn abrir-modal">Aparta tu lugar</button>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <section class="container" style="margin-top:-20px;">
+    <h2>Información Importante</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-content">
+          <h3>🚌 Viajes de un solo día</h3>
+          <ul>
+            <li>Transporte redondo</li>
+            <li>Coordinador de grupo</li>
+            <li>Regreso el mismo día</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3>🏨 Viajes de varios días</h3>
+          <ul>
+            <li>Transporte redondo</li>
+            <li>Hospedaje</li>
+            <li>Guía en algunos destinos</li>
+            <li>Coordinación durante el viaje</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3>📍 Puntos de salida</h3>
+          <p>Los puntos y horarios de salida pueden variar según el viaje.<br><strong>Consulta directamente con tu asesor</strong> para confirmar detalles.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h3>📞 Atención personalizada</h3>
+          <p><strong>Asesor GisVin</strong><br>442 867 1851</p>
+          <a class="btn" href="https://wa.me/524428671851">Enviar WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<a href="tel:+524428671851" class="floating-call"><i class="fas fa-phone"></i></a>
+<a href="https://wa.me/524428671851" class="floating-whatsapp"><i class="fab fa-whatsapp"></i></a>
+
+<footer>
+  <p>© 2026 GisVin Excursiones | Todos los derechos reservados</p>
+</footer>
+<!-- MODAL -->
+<div id="modalViaje" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="modalDestino"></h2>
+    <p id="modalFecha"></p>
+    <p id="modalPrecio"></p>
+    <br>
+    <a id="modalWhatsapp" class="btn" target="_blank">
+      Enviar mensaje por WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById("modalViaje");
+const cerrar = document.querySelector(".close");
+
+document.querySelectorAll(".abrir-modal").forEach(boton => {
+  boton.addEventListener("click", function() {
+
+    const card = this.closest(".card");
+    const destino = card.querySelector("h3").innerText;
+    const fecha = card.querySelector("p").innerText;
+    const precio = card.querySelector(".price").innerText;
+
+    document.getElementById("modalDestino").innerText = destino;
+    document.getElementById("modalFecha").innerHTML = "<strong>Fecha:</strong> " + fecha;
+
+    // 🔥 SI ES VIAJE DE VARIOS DÍAS
+    if(card.classList.contains("varios-dias")){
+
+      const doble = card.dataset.doble || "No disponible";
+      const triple = card.dataset.triple || "No disponible";
+      const cuadruple = card.dataset.cuadruple || "No disponible";
+
+      document.getElementById("modalPrecio").innerHTML = `
+        <strong>Precios por persona:</strong>
+        <ul style="text-align:left; margin-top:10px;">
+          <li>Habitación doble: ${doble}</li>
+          <li>Habitación triple: ${triple}</li>
+          <li>Habitación cuádruple: ${cuadruple}</li>
+        </ul>
+      `;
+
+    } else {
+
+      document.getElementById("modalPrecio").innerHTML =
+        "<strong>Precio:</strong> " + precio;
+
+    }
+
+    const mensaje = `Quisiera información del viaje a ${destino}`;
+    const url = "https://wa.me/524428671851?text=" + encodeURIComponent(mensaje);
+    document.getElementById("modalWhatsapp").href = url;
+
+    modal.style.display = "block";
+  });
+});
+
+cerrar.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>
