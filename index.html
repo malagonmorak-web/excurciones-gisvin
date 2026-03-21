@@ -500,23 +500,47 @@ document.querySelectorAll(".abrir-modal").forEach(boton => {
     document.getElementById("modalFecha").innerHTML = "<strong>Fecha:</strong> " + fecha;
 
     // 🔥 SI ES VIAJE DE VARIOS DÍAS
-if(card.classList.contains("varios-dias")){
+    if(card.classList.contains("varios-dias")){
 
-  const doble = card.dataset.doble || "No disponible";
-  const triple = card.dataset.triple || "No disponible";
-  const cuadruple = card.dataset.cuadruple || "No disponible";
+      const doble = card.dataset.doble || "No disponible";
+      const triple = card.dataset.triple || "No disponible";
+      const cuadruple = card.dataset.cuadruple || "No disponible";
 
-  document.getElementById("modalPrecio").innerHTML = `
-    <strong>Precios por persona:</strong>
-    <ul style="text-align:left; margin-top:10px;">
-      <li>Habitación doble: ${doble}</li>
-      <li>Habitación triple: ${triple}</li>
-      <li>Habitación cuádruple: ${cuadruple}</li>
-    </ul>
-  `;
+      document.getElementById("modalPrecio").innerHTML = `
+        <strong>Precios por persona:</strong>
+        <ul style="text-align:left; margin-top:10px;">
+          <li>Habitación doble: ${doble}</li>
+          <li>Habitación triple: ${triple}</li>
+          <li>Habitación cuádruple: ${cuadruple}</li>
+        </ul>
+      `;
 
-// 🔥 NUEVO: VARIOS PRECIOS (adulto / menor)
-} else if(card.classList.contains("varios-precios")){
+    } else {
+
+      document.getElementById("modalPrecio").innerHTML =
+        "<strong>Precio:</strong> " + precio;
+
+    }
+
+    const mensaje = Quisiera información del viaje a ${destino};
+    const url = "https://wa.me/524428671851?text=" + encodeURIComponent(mensaje);
+    document.getElementById("modalWhatsapp").href = url;
+
+    modal.style.display = "block";
+  });
+});
+
+cerrar.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+  // 🔥 SI ES VIAJE DE VARIOS PRECIOS
+if(card.classList.contains("varios-precios")){
 
   const adulto = card.dataset.adulto || "No disponible";
   const menor = card.dataset.menor || "No disponible";
