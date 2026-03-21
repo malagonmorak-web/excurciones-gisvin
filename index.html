@@ -282,10 +282,9 @@
        <button class="btn abrir-modal">Aparta tu lugar</button>
       </div>
     </div>
-     <div class="card varios-precios"
-          data-niños menores a 90cm entran gratis="$000"
-          data-niños de 5 a 11 años="$999"
-          data-Adultos y mayores de 12 años="$1099">
+    <div class="card varios-precios"
+     data-adulto="$1099"
+     data-menor="niños de 5 a 10 años $999">
       <img src="img8.jpg" alt="Bioparque Estrella" width="300">
       <div class="card-content">
         <h3>Bioparque Estrella</h3>
@@ -294,9 +293,9 @@
         <a class="btn" href="https://wa.me/524428671851">Cunsulta precios y disponibilidad</a>
       </div>
     </div>
-    <div class="card varios-precios"
-     data-niños de 4 a 11 años="$600"
-     data-Adultos y mayores de 11 años="$850">
+   <div class="card varios-precios"
+     data-adulto="850"
+     data-menor="$600">
       <img src="img9.jpg" alt="Zoologico" width="300">
       <div class="card-content">
         <h3>Zoologico de Guadalajara</h3>
@@ -539,6 +538,26 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+}
+  // 🔥 SI ES VIAJE DE VARIOS PRECIOS
+if(card.classList.contains("varios-precios")){
+
+  const adulto = card.dataset.adulto || "No disponible";
+  const menor = card.dataset.menor || "No disponible";
+
+  document.getElementById("modalPrecio").innerHTML = `
+    <strong>Precios por persona:</strong>
+    <ul style="text-align:left; margin-top:10px;">
+      <li>Adulto: ${adulto}</li>
+      <li>Menor: ${menor}</li>
+    </ul>
+  `;
+
+} else {
+
+  document.getElementById("modalPrecio").innerHTML =
+    "<strong>Precio:</strong> " + precio;
+
 }
 </script>
 </body>
