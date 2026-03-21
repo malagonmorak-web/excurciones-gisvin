@@ -539,26 +539,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-  // 🔥 SI ES VIAJE DE VARIOS PRECIOS
-if(card.classList.contains("varios-precios")){
-
-  const adulto = card.dataset.adulto || "No disponible";
-  const menor = card.dataset.menor || "No disponible";
-
-  document.getElementById("modalPrecio").innerHTML = `
-    <strong>Precios por persona:</strong>
-    <ul style="text-align:left; margin-top:10px;">
-      <li>Adulto: ${adulto}</li>
-      <li>Menor: ${menor}</li>
-    </ul>
-  `;
-
-} else {
-
-  document.getElementById("modalPrecio").innerHTML =
-    "<strong>Precio:</strong> " + precio;
-
-}
+ 
 </script>
 </body>
 </html>
