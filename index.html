@@ -188,6 +188,133 @@
   from{transform:scale(0.7);}
   to{transform:scale(1);}
 }
+.search-icon{
+  position:absolute;
+  top:20px;
+  right:25px;
+  font-size:1.5em;
+  cursor:pointer;
+  color:white;
+   z-index: 999;
+}
+
+
+/* ================= APP PREMIUM OVERLAY ================= */
+
+.search-overlay{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:9999;
+
+  background: linear-gradient(180deg, #0f4c75, #1b9aaa);
+  backdrop-filter: blur(8px);
+
+  padding:25px 0; /* 👈 QUITAMOS padding lateral */
+  overflow:auto;
+
+  animation: fadeIn 0.25s ease;
+}
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(1.05);}
+  to{opacity:1; transform:scale(1);}
+}
+
+/* HEADER */
+.search-header{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  margin-bottom:10px;
+  color:white;
+}
+
+/* INPUT PREMIUM */
+#inputBusqueda{
+  width:100%;
+  padding:16px 18px;
+  border-radius:40px;
+  border:none;
+  outline:none;
+  font-size:1.1em;
+  font-family:'Poppins', sans-serif;
+  box-shadow:0 15px 35px rgba(0,0,0,0.25);
+}
+/* RESULTADOS */
+.resultados{
+  margin-top:25px;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap:20px;
+}
+
+/* BOTÓN REGRESAR */
+.btn-regresar{
+  position:absolute;
+  top:15px;
+  right:20px;
+
+  background:#06d6a0;
+  color:#003049;
+
+  width:55px;
+  height:55px;
+
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+
+  font-size:1.4em;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  transition:0.2s;
+}
+
+.btn-regresar:hover{
+  transform:scale(1.1);
+  background:white;
+}
+
+.btn-regresar:hover{
+  background:white;
+}
+
+/* BOTÓN CERRAR */
+.cerrar-busqueda{
+  font-size:2em;
+  cursor:pointer;
+  color:white;
+}
+
+/* SUGERENCIAS */
+.sugerencias{
+  margin-top:15px;
+  color:white;
+  opacity:0.9;
+  font-size:0.9em;
+}
+
+.resultados{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap:20px;
+}
+
+.search-box{
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 20px; /* 👈 aquí controlas el margen real */
+}
+
   </style>
 </head>
 <body>
@@ -198,6 +325,11 @@
 </div>
   <h1>GisVin Excursiones</h1>
   <p>Viajes, aventuras y recuerdos inolvidables 🌊✈️</p>
+  <!-- ICONO DE BUSQUEDA -->
+<div id="abrirBusqueda" class="search-icon">
+  <i class="fas fa-search"></i>
+</div>
+ 
 </header>
 
 <div class="container">
@@ -617,13 +749,36 @@
     <p id="modalFecha"></p>
     <p id="modalPrecio"></p>
     <br>
-    <a id="modalWhatsapp" class="btn" target="_blank">
-      Enviar mensaje por WhatsApp
-    </a>
+   <br><br>
+
+<input id="nombreCliente" placeholder="Tu nombre"
+style="width:90%;padding:10px;border-radius:10px;border:none;margin-bottom:10px;">
+
+<input id="telefonoCliente" placeholder="Tu teléfono"
+style="width:90%;padding:10px;border-radius:10px;border:none;margin-bottom:10px;">
+
+<button id="guardarLead" class="btn">Guardar y enviar</button>
+
+<p id="contadorInteres" style="margin-top:10px;font-size:0.9em;color:#555;"></p>
   </div>
 </div>
 
+<div class="search-overlay" id="searchOverlay">
+
+  <div class="search-box">
+
+    <span class="cerrar-busqueda" id="cerrarBusqueda">&times;</span>
+
+    <input type="text" id="inputBusqueda" placeholder="🔍 Busca tu viaje...">
+
+    <div class="resultados" id="resultadosBusqueda"></div>
+
+  </div>
+
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+// ================= MODAL =================
 const modal = document.getElementById("modalViaje");
 const cerrar = document.querySelector(".close");
 
@@ -638,46 +793,190 @@ document.querySelectorAll(".abrir-modal").forEach(boton => {
     document.getElementById("modalDestino").innerText = destino;
     document.getElementById("modalFecha").innerHTML = "<strong>Fecha:</strong> " + fecha;
 
-    // 🔥 SI ES VIAJE DE VARIOS DÍAS
     if(card.classList.contains("varios-dias")){
-
-      const doble = card.dataset.doble || "No disponible";
-      const triple = card.dataset.triple || "No disponible";
-      const cuadruple = card.dataset.cuadruple || "No disponible";
-
       document.getElementById("modalPrecio").innerHTML = `
         <strong>Precios por persona:</strong>
-        <ul style="text-align:left; margin-top:10px;">
-          <li>Habitación doble: ${doble}</li>
-          <li>Habitación triple: ${triple}</li>
-          <li>Habitación cuádruple: ${cuadruple}</li>
-        </ul>
-      `;
-
+        <ul style="text-align:left;">
+          <li>Doble: ${card.dataset.doble}</li>
+          <li>Triple: ${card.dataset.triple}</li>
+          <li>Cuádruple: ${card.dataset.cuadruple}</li>
+        </ul>`;
     } else {
-
-      document.getElementById("modalPrecio").innerHTML =
-        "<strong>Precio:</strong> " + precio;
-
+      document.getElementById("modalPrecio").innerHTML = "<strong>Precio:</strong> " + precio;
     }
 
-    const mensaje = `Quisiera información del viaje a ${destino}`;
-    const url = "https://wa.me/524428671851?text=" + encodeURIComponent(mensaje);
-    document.getElementById("modalWhatsapp").href = url;
-
     modal.style.display = "block";
+
+    // 🔥 contador fake pro
+    document.getElementById("contadorInteres").innerText =
+      "🔥 " + (Math.floor(Math.random()*20)+5) + " personas viendo este viaje";
+
   });
 });
 
-cerrar.onclick = function() {
-  modal.style.display = "none";
-}
+cerrar.onclick = () => modal.style.display = "none";
+window.onclick = e => { if(e.target == modal) modal.style.display = "none"; };
 
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+// ================= BUSCADOR =================
+document.getElementById("buscador").addEventListener("keyup", function(){
+  const texto = this.value.toLowerCase();
+
+  document.querySelectorAll(".card").forEach(card => {
+    const destino = card.querySelector("h3").innerText.toLowerCase();
+    card.style.display = destino.includes(texto) ? "block" : "none";
+  });
+});
+
+// ================= ANIMACIONES =================
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.style.opacity = "1";
+      entry.target.style.transform = "translateY(0)";
+    }
+  });
+});
+
+document.querySelectorAll(".card").forEach(card => {
+  card.style.opacity = "0";
+  card.style.transform = "translateY(40px)";
+  card.style.transition = "all 0.6s ease";
+  observer.observe(card);
+});
+
+// ================= CLICK BOTONES PRO =================
+document.addEventListener("click", function(e){
+  if(e.target.classList.contains("btn")){
+    e.target.style.transform = "scale(0.95)";
+    setTimeout(() => e.target.style.transform = "scale(1)", 150);
   }
+});
+
+// ================= GUARDAR CLIENTE =================
+document.getElementById("guardarLead").addEventListener("click", () => {
+
+  const nombre = document.getElementById("nombreCliente").value;
+  const telefono = document.getElementById("telefonoCliente").value;
+  const destino = document.getElementById("modalDestino").innerText;
+
+  if(!nombre || !telefono){
+    alert("Llena tus datos");
+    return;
+  }
+
+  let leads = JSON.parse(localStorage.getItem("clientes")) || [];
+
+  leads.push({nombre, telefono, destino});
+  localStorage.setItem("clientes", JSON.stringify(leads));
+
+  const mensaje = `Hola, soy ${nombre}. Me interesa ${destino}. Tel: ${telefono}`;
+  window.open("https://wa.me/524428671851?text=" + encodeURIComponent(mensaje));
+});
+
+// ================= FAVORITOS =================
+document.querySelectorAll(".card").forEach(card => {
+  card.addEventListener("dblclick", () => {
+    card.style.border = "3px solid gold";
+  });
+});
+
+// ================= ADMIN OCULTO =================
+const panel = document.createElement("div");
+panel.style = "display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:black;color:white;padding:20px;z-index:9999;overflow:auto;";
+panel.innerHTML = "<h2>Panel Admin</h2><div id='adminLista'></div><button onclick='this.parentElement.style.display=\"none\"' class='btn'>Cerrar</button>";
+document.body.appendChild(panel);
+
+document.addEventListener("keydown", e => {
+  if(e.ctrlKey && e.shiftKey && e.key === "A"){
+    panel.style.display = "block";
+    const lista = document.getElementById("adminLista");
+    lista.innerHTML = "";
+
+    document.querySelectorAll(".card").forEach((card,i)=>{
+      const destino = card.querySelector("h3").innerText;
+      const precio = card.querySelector(".price");
+
+      const input = document.createElement("input");
+      input.value = precio.innerText;
+      input.style = "display:block;margin-bottom:10px;padding:5px;";
+
+      input.oninput = () => precio.innerText = input.value;
+
+      lista.append(destino, input);
+    });
+  }
+});
+
+});
+const hash = decodeURIComponent(window.location.hash.replace("#",""));
+
+if(hash){
+  document.querySelectorAll(".card").forEach(card => {
+    const nombre = card.querySelector("h3").innerText;
+
+    if(nombre.includes(hash)){
+      card.scrollIntoView({behavior:"smooth"});
+      card.style.border = "3px solid yellow";
+    }
+  });
 }
+document.addEventListener("DOMContentLoaded", () => {
+
+const abrir = document.getElementById("abrirBusqueda");
+const cerrar = document.getElementById("cerrarBusqueda");
+const overlay = document.getElementById("searchOverlay");
+const input = document.getElementById("inputBusqueda");
+const resultados = document.getElementById("resultadosBusqueda");
+const cards = document.querySelectorAll(".card");
+
+// abrir overlay
+abrir.addEventListener("click", () => {
+  overlay.style.display = "block";
+  input.value = "";
+  input.focus();
+  resultados.innerHTML = "";
+});
+
+// cerrar overlay
+cerrar.addEventListener("click", () => {
+  overlay.style.display = "none";
+});
+
+// buscar en tiempo real
+input.addEventListener("input", () => {
+
+  const texto = input.value.toLowerCase().trim();
+  resultados.innerHTML = "";
+
+  cards.forEach(card => {
+
+    const destino = card.querySelector("h3").innerText.toLowerCase();
+
+    if (destino.includes(texto)) {
+      const clon = card.cloneNode(true);
+      resultados.appendChild(clon);
+    }
+
+  });
+
+  if (resultados.innerHTML === "") {
+    resultados.innerHTML = `
+      <p style="color:#333;text-align:center;">
+        No se encontraron viajes 😕
+      </p>
+    `;
+  }
+
+});
+
+});
+const btnRegresar = document.getElementById("btnRegresar");
+
+// cerrar con botón regresar
+btnRegresar.addEventListener("click", () => {
+  overlay.style.display = "none";
+});
+</script>
 </script>
 </body>
 </html>
